@@ -1,0 +1,111 @@
+module LittlePrince
+
+%default covering
+
+-- Type sketch for the Lua game layer / C geometry boundary.
+-- This is intentionally a design sketch, not the implementation language.
+
+record Metres where
+  constructor M
+  value : Float
+
+record Radians where
+  constructor Rad
+  value : Float
+
+record Seconds where
+  constructor Sec
+  value : Float
+
+record Vec3 where
+  constructor V3
+  x : Float
+  y : Float
+  z : Float
+
+-- The C core maintains these geometric invariants:
+--   |up| = 1
+--   |forward| = 1
+--   up · forward = 0
+record SurfaceFrame where
+  constructor Frame
+  up : Vec3
+  forward : Vec3
+
+record Planet where
+  constructor TinyPlanet
+  radius : Metres
+  vertical_exaggeration : Float
+
+record Walker where
+  constructor Walking
+  frame : SurfaceFrame
+  eye_height : Metres
+
+record Camera where
+  constructor ChaseCamera
+  yaw : Radians
+  pitch : Radians
+
+data RoseState = Dry | Watered
+
+record Rose (state : RoseState) where
+  constructor TheRose
+  surface_direction : Vec3
+
+data CometState = Quiet | Writing
+
+record Game (rose : RoseState) (comet : CometState) where
+  constructor World
+  planet : Planet
+  prince : Walker
+  flower : Rose rose
+  camera : Camera
+
+-- Commands expose the small semantic interface that Lua should see.
+-- Movement and camera operations preserve the game-state indices.
+-- Watering and comet writing have explicit state transitions.
+data Command : RoseState → CometState → RoseState → CometState → Type where
+  Walk : Metres → Command rose comet rose comet
+  Turn : Radians → Command rose comet rose comet
+  Look : Radians → Radians → Command rose comet rose comet
+  ResetCamera : Command rose comet rose comet
+
+  WaterRose : Command Dry comet Watered comet
+  WaterAgain : Command Watered comet Watered comet
+
+  BeginComet : Command rose Quiet rose Writing
+  StopComet : Command rose Writing rose Quiet
+
+-- The native C side should satisfy an interface of roughly this shape.
+record NativeGeometry where
+  constructor Geometry
+  walk : Walker → Metres → Walker
+  turn : Walker → Radians → Walker
+  position : Planet → Walker → Vec3
+  terrain_height : Planet → Vec3 → Metres
+
+-- Lua chooses Commands.  The engine applies them.
+-- A later executable Edriç experiment could implement this relation directly.
+apply :
+  NativeGeometry →
+  Command rose0 comet0 rose1 comet1 →
+  Game rose0 comet0 →
+  Game rose1 comet1
+apply geometry (Walk distance) game =
+  { prince := geometry.walk game.prince distance } game
+apply geometry (Turn angle) game =
+  { prince := geometry.turn game.prince angle } game
+apply geometry (Look yaw pitch) game =
+  { camera := ChaseCamera yaw pitch } game
+apply geometry ResetCamera game =
+  { camera := ChaseCamera (Rad 0.0) (Rad 0.0) } game
+apply geometry WaterRose game =
+  { flower := TheRose game.flower.surface_direction } game
+apply geometry WaterAgain game = game
+apply geometry BeginComet game = game
+apply geometry StopComet game = game
+
+-- One useful property to keep in mind when the sketch becomes executable:
+-- a complete lap changes position continuously while preserving a valid
+-- tangent frame; longitude and latitude never belong in the Walker type.
