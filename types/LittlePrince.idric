@@ -53,9 +53,9 @@ record Rose (state : RoseState) where
   constructor TheRose
   surface_direction : Vec3
 
-data CometState = Distant | Riding
+data GamePhase = Exploring | ReturningHome
 
-record Game (rose : RoseState) (comet : CometState) where
+record Game (rose : RoseState) (phase : GamePhase) where
   constructor World
   planet : Planet
   prince : Walker
@@ -63,19 +63,20 @@ record Game (rose : RoseState) (comet : CometState) where
   camera : Camera
 
 -- Commands expose the small semantic interface that Lua should see.
--- Movement and camera operations preserve the game-state indices.
--- Watering and comet writing have explicit state transitions.
-data Command : RoseState → CometState → RoseState → CometState → Type where
-  Walk : Metres → Command rose comet rose comet
-  Turn : Radians → Command rose comet rose comet
-  Look : Radians → Radians → Command rose comet rose comet
-  ResetCamera : Command rose comet rose comet
+-- Version 0 has one playable phase. Riding the comet is the terminal action:
+-- switch to the fixed return-to-Earth sequence, play it, then close the app.
+data Command : RoseState → GamePhase → RoseState → GamePhase → Type where
+  Walk : Metres → Command rose Exploring rose Exploring
+  Turn : Radians → Command rose Exploring rose Exploring
+  Look : Radians → Radians → Command rose Exploring rose Exploring
+  ResetCamera : Command rose Exploring rose Exploring
 
-  WaterRose : Command Dry comet Watered comet
-  WaterAgain : Command Watered comet Watered comet
+  WaterRose : Command Dry Exploring Watered Exploring
+  WaterAgain : Command Watered Exploring Watered Exploring
 
-  RideComet : Command rose Distant rose Riding
-  LeaveComet : Command rose Riding rose Distant
+  RideComet : Command rose Exploring rose ReturningHome
+
+data ExitScreen = CometRideToEarth
 
 -- The native C side should satisfy an interface of roughly this shape.
 record NativeGeometry where
@@ -103,8 +104,15 @@ apply geometry ResetCamera game =
 apply geometry WaterRose game =
   { flower := TheRose game.flower.surface_direction } game
 apply geometry WaterAgain game = game
-apply geometry RideComet game = game
-apply geometry LeaveComet game = game
+apply geometry RideComet (World planet prince flower camera) =
+  World planet prince flower camera
+
+exit_screen : Game rose ReturningHome → ExitScreen
+exit_screen _ = CometRideToEarth
+
+-- ReturningHome is deliberately terminal in version 0.  It has no movement,
+-- rose, or camera Commands.  The host plays one fixed star-flight / Earth
+-- approach screen or video and exits when playback finishes.
 
 -- One useful property to keep in mind when the sketch becomes executable:
 -- a complete lap changes position continuously while preserving a valid
