@@ -53,7 +53,7 @@ record Rose (state : RoseState) where
   constructor TheRose
   surface_direction : Vec3
 
-data CometState = Quiet | Writing
+data CometState = Distant | Riding
 
 record Game (rose : RoseState) (comet : CometState) where
   constructor World
@@ -74,8 +74,8 @@ data Command : RoseState → CometState → RoseState → CometState → Type wh
   WaterRose : Command Dry comet Watered comet
   WaterAgain : Command Watered comet Watered comet
 
-  BeginComet : Command rose Quiet rose Writing
-  StopComet : Command rose Writing rose Quiet
+  RideComet : Command rose Distant rose Riding
+  LeaveComet : Command rose Riding rose Distant
 
 -- The native C side should satisfy an interface of roughly this shape.
 record NativeGeometry where
@@ -103,8 +103,8 @@ apply geometry ResetCamera game =
 apply geometry WaterRose game =
   { flower := TheRose game.flower.surface_direction } game
 apply geometry WaterAgain game = game
-apply geometry BeginComet game = game
-apply geometry StopComet game = game
+apply geometry RideComet game = game
+apply geometry LeaveComet game = game
 
 -- One useful property to keep in mind when the sketch becomes executable:
 -- a complete lap changes position continuously while preserving a valid
