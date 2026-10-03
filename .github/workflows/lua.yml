@@ -1,0 +1,21 @@
+name: Lua game tests
+
+on:
+  push:
+    branches:
+      - prototype/lua-comet-exit
+  pull_request:
+
+jobs:
+  lua:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lua 5.4
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.4
+      - name: Run Lua comet state-machine test
+        run: lua5.4 game/test_little_prince.lua
+      - name: Run C spherical walker test
+        run: sh ./run-tests.sh
