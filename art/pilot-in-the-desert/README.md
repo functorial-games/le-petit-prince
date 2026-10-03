@@ -81,9 +81,7 @@ The face rig should allow fatigue and astonishment to coexist. See `facial-rig.m
 
 ## Reference iterations
 
-The image experiments from the design conversation are stored beside this file as `iteration-1.webp` through `iteration-5.webp`, plus `contact-sheet.webp`.
-
-They record the progression:
+`contact-sheet.webp` preserves the five visual iterations from the design conversation in one compact in-repository reference:
 
 1. tired mustached pilot, comparatively light skin and thinner body;
 2. darker skin and heavier body;
@@ -91,4 +89,4 @@ They record the progression:
 4. emphasis on underlying depression plus wide-eyed astonishment at seeing the Prince;
 5. rougher painterly / caricatured hand-drawn direction.
 
-These are exploratory references, not final production art.
+The contact sheet is intentionally a compact reference rather than production-resolution artwork. The full generated originals remain exploratory source material rather than final game assets.
