@@ -55,7 +55,7 @@ void pilot_renderer_restore(const void *data,unsigned long size) {
     if(size!=sizeof(FaceUI)||!data)return;
     FaceUI saved;memcpy(&saved,data,size);
     double q[FACE_ACTUATORS];
-    if(!face_controls_to_muscles(saved.controls,q)||!isfinite(saved.yaw)||!isfinite(saved.pitch)||saved.pitch<-1.2||saved.pitch>1.2||saved.selected<0||saved.selected>=36||saved.preset<0||saved.preset>6||saved.bilateral<0||saved.bilateral>1)return;
+    if(!face_controls_to_muscles(saved.controls,q)||!isfinite(saved.yaw)||!isfinite(saved.pitch)||saved.pitch<-1.2||saved.pitch>1.2||saved.selected<0||saved.selected>=36||saved.preset<0||saved.preset>6||saved.bilateral<0||saved.bilateral>1||saved.view_mode<0||saved.view_mode>1)return;
     ui=saved;initialized=true;
 }
 static FacePoint project(FacePoint p){return face_project(p,ui.yaw,ui.pitch);}
@@ -110,28 +110,75 @@ static void button(int column,double y,const char *label) {
     rectangle(column*.25+.01,y+.004,.23,.068,.19f,.22f,.23f);
     text(column*.25+.025,y+.025,label,width/250.0);
 }
+static double selected_control_map(double magnitudes[FACE_VERTICES]) {
+    double controls[FACE_CONTROLS]={0};
+    FaceResult isolated;
+    controls[ui.selected]=1;
+    if(!face_from_controls(controls,&isolated)) {
+        memset(magnitudes,0,sizeof(double)*FACE_VERTICES);
+        return 0;
+    }
+    double maximum=0;
+    for(int i=0;i<FACE_VERTICES;i++) {
+        double dx=isolated.vertices[i].x-face_rest_vertices[i].x;
+        double dy=isolated.vertices[i].y-face_rest_vertices[i].y;
+        double dz=isolated.vertices[i].z-face_rest_vertices[i].z;
+        double magnitude=sqrt(dx*dx+dy*dy+dz*dz);
+        magnitudes[i]=magnitude;
+        if(magnitude>maximum)maximum=magnitude;
+    }
+    return maximum;
+}
+static void heat_color(double value,double shade,float *r,float *g,float *b) {
+    double t=fmax(0,fmin(1,value));
+    if(t<.015) {
+        *r=(float)(.13*shade);*g=(float)(.14*shade);*b=(float)(.15*shade);
+        return;
+    }
+    t=sqrt(t);
+    double rr,gg,bb;
+    if(t<.25){rr=0;gg=t*4;bb=1;}
+    else if(t<.50){rr=0;gg=1;bb=2-t*4;}
+    else if(t<.75){rr=t*4-2;gg=1;bb=0;}
+    else {rr=1;gg=4-t*4;bb=0;}
+    *r=(float)(rr*shade);*g=(float)(gg*shade);*b=(float)(bb*shade);
+}
 void pilot_renderer_draw(void) {
     if(width<=0||height<=0||!program)return;
     glViewport(0,0,width,height);glClearColor(.07f,.09f,.11f,1);glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);glDisable(GL_CULL_FACE);glEnable(GL_SCISSOR_TEST);
     glScissor(0,(int)(height*.37),width,(int)(height*.56));used=0;
     bool ok=face_from_controls(ui.controls,&result);
+    double magnitudes[FACE_VERTICES],map_maximum=0;
+    if(ok&&ui.view_mode)map_maximum=selected_control_map(magnitudes);
     if(ok) {
         for(int i=0;i<FACE_TRIANGLES;i++) {
             const unsigned short *t=face_triangles[i];FacePoint a=project(result.vertices[t[0]]),b=project(result.vertices[t[1]]),c=project(result.vertices[t[2]]);
             double ux=b.x-a.x,uy=b.y-a.y,uz=b.z-a.z,vx=c.x-a.x,vy=c.y-a.y,vz=c.z-a.z;
             double nx=uy*vz-uz*vy,ny=uz*vx-ux*vz,nz=ux*vy-uy*vx,n=sqrt(nx*nx+ny*ny+nz*nz);
             double shade=.36+.64*fmax(0,(nx*.2+ny*.4+nz*.9)/(n?n:1)/sqrt(1.01));
-            face_vertex(a,(float)(.56*shade),(float)(.35*shade),(float)(.23*shade));
-            face_vertex(b,(float)(.56*shade),(float)(.35*shade),(float)(.23*shade));
-            face_vertex(c,(float)(.56*shade),(float)(.35*shade),(float)(.23*shade));
+            if(ui.view_mode) {
+                float ar,ag,ab,br,bg,bb,cr,cg,cb;
+                double scale=map_maximum>0?1/map_maximum:0;
+                heat_color(magnitudes[t[0]]*scale,.55+.45*shade,&ar,&ag,&ab);
+                heat_color(magnitudes[t[1]]*scale,.55+.45*shade,&br,&bg,&bb);
+                heat_color(magnitudes[t[2]]*scale,.55+.45*shade,&cr,&cg,&cb);
+                face_vertex(a,ar,ag,ab);face_vertex(b,br,bg,bb);face_vertex(c,cr,cg,cb);
+            } else {
+                face_vertex(a,(float)(.56*shade),(float)(.35*shade),(float)(.23*shade));
+                face_vertex(b,(float)(.56*shade),(float)(.35*shade),(float)(.23*shade));
+                face_vertex(c,(float)(.56*shade),(float)(.35*shade),(float)(.23*shade));
+            }
         }
         eye(32);eye(-32);flush();
     }
     glDisable(GL_SCISSOR_TEST);glDisable(GL_DEPTH_TEST);
     rectangle(0,0,1,.07,.12f,.15f,.16f);text(.03,.018,"PILOT FACE - NATIVE TEST",width/210.0);
+    button(3,0,ui.view_mode?"SKIN":"RAINBOW");
     text(.03,.635,"DRAG FACE TO ORBIT",width/260.0);
-    char line[96];snprintf(line,sizeof(line),"%02d %s %.2f",ui.selected+1,face_control_names[ui.selected],ui.controls[ui.selected]);
+    char line[96];
+    if(ui.view_mode)snprintf(line,sizeof(line),"%02d %s %.2f MAP %.2f",ui.selected+1,face_control_names[ui.selected],ui.controls[ui.selected],map_maximum);
+    else snprintf(line,sizeof(line),"%02d %s %.2f",ui.selected+1,face_control_names[ui.selected],ui.controls[ui.selected]);
     text(.03,.67,line,width/235.0);
     button(0,.72,"PREV");button(1,.72,"NEXT");button(2,.72,"- 0.1");button(3,.72,"+ 0.1");
     button(0,.80,ui.bilateral?"PAIR ON":"PAIR OFF");button(1,.80,"NEUTRAL");button(2,.80,"PRESET");button(3,.80,"BLINK");
