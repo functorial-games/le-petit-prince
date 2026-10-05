@@ -17,7 +17,9 @@ static void preset(FaceUI *s) {
     }
 }
 bool face_ui_press(FaceUI *s,double x,double y) {
-    if(!isfinite(x)||!isfinite(y)||x<0||x>=1||y<.72||y>=.96)return false;
+    if(!isfinite(x)||!isfinite(y)||x<0||x>=1||y<0||y>=1)return false;
+    if(y<.07&&x>=.75){s->view_mode=!s->view_mode;return true;}
+    if(y<.72||y>=.96)return false;
     int column=(int)(x*4);
     if(y<.80) {
         if(column==0)s->selected=(s->selected+35)%36;
