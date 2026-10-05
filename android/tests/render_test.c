@@ -17,7 +17,9 @@ static void frame(const char *name,int neutral_expected) {
     for(int y=(int)(HEIGHT*.37);y<(int)(HEIGHT*.93);y++)for(int x=0;x<WIDTH;x++) {
         int i=(y*WIDTH+x)*4;
         if(memcmp(pixels+i,neutral+i,3))changed++;
-        if(pixels[i]>pixels[i+2]&&pixels[i]>35)face_pixels++;
+        unsigned char brightest=pixels[i]>pixels[i+1]?pixels[i]:pixels[i+1];
+        if(pixels[i+2]>brightest)brightest=pixels[i+2];
+        if(brightest>45)face_pixels++;
     }
     require(face_pixels>10000,"face visible in native renderer");
     if(!strcmp(name,"neutral"))memcpy(neutral,pixels,sizeof(pixels));
@@ -39,6 +41,8 @@ int main(void) {
     require(surface!=EGL_NO_SURFACE&&context!=EGL_NO_CONTEXT&&eglMakeCurrent(display,surface,surface,context),"pbuffer context");
     printf("Host GL vendor: %s; renderer: %s\n",glGetString(GL_VENDOR),glGetString(GL_RENDERER));
     require(pilot_renderer_start(WIDTH,HEIGHT,2),"native renderer starts");frame("neutral",1);
+    require(pilot_renderer_press(.875f,.035f),"rainbow view input");frame("rainbow-selected-control",0);
+    require(pilot_renderer_press(.875f,.035f),"skin view input");frame("skin-restored",1);
     const char *names[]={"smile","frown","unilateral","jaw-open","jaw-left","brow"};
     for(int i=0;i<6;i++){require(pilot_renderer_press(.625f,.84f),"preset input");frame(names[i],0);}
     require(pilot_renderer_press(.375f,.84f),"neutral input");frame("reset",1);
