@@ -4,7 +4,7 @@
 typedef struct {
     double controls[FACE_CONTROLS];
     double yaw,pitch;
-    int selected,bilateral,preset;
+    int selected,bilateral,preset,view_mode;
 } FaceUI;
 void face_ui_reset(FaceUI *state);
 /* Normalized screen coordinates; rows match native renderer layout. */
