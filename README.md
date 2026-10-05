@@ -1,5 +1,10 @@
 # Little Prince / tiny-planet prototype
 
+The separate [native pilot-face test APK](android/README.md) ports the current
+Beauty anatomical model to portable C and a DEX-free NativeActivity renderer.
+Its CI lane builds a signed MIRO A1 APK; physical-device acceptance and pilot
+likeness remain pending. It does not replace the tiny-planet experiment below.
+
 This is the first playable geometry experiment before `m004`.
 
 The world is an ordinary 2-sphere embedded in Euclidean 3-space. That is

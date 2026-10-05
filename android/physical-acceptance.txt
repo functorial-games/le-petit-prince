@@ -1,0 +1,17 @@
+target_device=MIRO A1
+expected_abi=armeabi-v7a
+source_commit=PENDING
+apk_sha256=PENDING
+signer_cert_sha256=de9b1d47c5a65e6d46a204b79dd9ee566b9d3c9832ba81ebc4213d3392e92ff9
+device_identity_receipt=PENDING
+install=PENDING
+launch=PENDING
+face_visible=PENDING
+drag_rotates=PENDING
+control_deforms=PENDING
+smile_frown_unilateral_brow_blink=PENDING
+jaw_open_left_right=PENDING
+neutral_reset=PENDING
+repeated_manipulation=PENDING
+background_resume=PENDING
+physical_acceptance=PENDING
