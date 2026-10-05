@@ -31,9 +31,10 @@ int main(int argc,char **argv) {
     check(strstr(manifest,"android.app.lib_name")&&strstr(manifest,"pilot_face"),"native library metadata");
     const char *has=strstr(manifest,"android:hasCode");check(has!=NULL,"hasCode present");
     const char *line_end=strchr(has,'\n');check(line_end!=NULL,"hasCode line complete");
-    const char *value=strstr(has,"(type 0x12)0x0");check(value&&value<line_end,"hasCode=false");
+    const char *value=strstr(has,"=false");check(value&&value<line_end,"hasCode=false");
     check(!strstr(manifest,"android.permission.INTERNET"),"no network permission");
     check(strstr(signer,"certificate SHA-256 digest: de9b1d47c5a65e6d46a204b79dd9ee566b9d3c9832ba81ebc4213d3392e92ff9")!=NULL,"finished APK uses pinned public test certificate");
+    check(strstr(signer,"Number of signers: 1")!=NULL,"exactly one signer");
     check(strstr(symbols,"ANativeActivity_onCreate")&&strstr(symbols,"android_main"),"native entry symbols");
     check(strstr(symbols,"libandroid.so")&&strstr(symbols,"libEGL.so")&&strstr(symbols,"libGLESv2.so"),"Android/EGL/GLES dependencies");
     check(!strstr(symbols,"Java_")&&!strstr(symbols,"JNI_OnLoad"),"no application JNI entry");

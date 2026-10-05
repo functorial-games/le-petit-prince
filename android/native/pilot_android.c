@@ -318,7 +318,6 @@ static int32_t pilot_handle_input(
 }
 
 void android_main(struct android_app *app) {
-    app_dummy();
     PILOT_LOG("native entry");
 
     struct pilot_android_state state;
