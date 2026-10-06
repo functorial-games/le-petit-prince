@@ -20,6 +20,11 @@ They are **technical orientation summaries**, not substitutes for the full sourc
 - [Sifakis, Neverov & Fedkiw (2005) — *Automatic Determination of Facial Muscle Activations from Sparse Motion Capture Marker Data*](sifakis-neverov-fedkiw-2005.md)
 - [Wu, Hung, Hunter & Mithraratne (2013) — *Modelling facial expressions: a framework for simulating nonlinear soft tissue deformations using embedded 3-D muscles*](wu-hung-hunter-mithraratne-2013.md)
 - [Wu, Hung & Mithraratne (2014) — *Generating Facial Expressions Using an Anatomically Accurate Biomechanical Model*](wu-hung-mithraratne-2014.md)
+- [Rohrich & Pessa (2007) — *The Fat Compartments of the Face*](rohrich-pessa-2007-fat-compartments.md)
+- [Rohrich & Pessa (2008) — *The Retaining System of the Face*](rohrich-pessa-2008-retaining-system.md)
+- [Furnas (1989) — *The Retaining Ligaments of the Cheek*](furnas-1989-retaining-ligaments-cheek.md)
+- [Moss, Mendelson & Taylor (2000) — ligamentous attachments of temple/periorbital regions](moss-mendelson-taylor-2000-ligamentous-attachments.md)
+- [Mendelson & Wu (2008) — premasseter space, jowl, and labiomandibular fold](mendelson-wu-2008-lower-face.md)
 
 ## Working conclusion for this repository
 
