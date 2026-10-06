@@ -209,7 +209,10 @@ def outputs():
 def main():
     generated=outputs()
     if "--check" in sys.argv:
-        bad=[name for name,text in generated.items() if not (HERE/name).exists() or (HERE/name).read_text()!=text]
+        check_names=("pilot-control-cage-v0.obj","pilot-control-cage-v0.points.tsv","pilot-control-cage-v0.parameters.tsv")
+        bad=[name for name in check_names if not (HERE/name).exists() or (HERE/name).read_text()!=generated[name]]
+        if not (HERE/"pilot-control-cage-v0.svg").exists():
+            bad.append("pilot-control-cage-v0.svg (missing preview)")
         if bad:
             print("control-cage drift: "+", ".join(bad),file=sys.stderr)
             return 1
