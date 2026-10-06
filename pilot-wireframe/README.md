@@ -1,5 +1,17 @@
 # Pilot wireframe / control-surface program
 
+## Visual first
+
+Current control cage:
+
+![Pilot control cage — front, three-quarter, profile](pilot-control-cage-v0.svg)
+
+Current facial feature topology:
+
+![Pilot feature topology v2](pilot-feature-topology-v2.svg)
+
+The pictures are the primary way to inspect this work. Tables and OBJ files underneath them record the geometry and tests; they are not meant to be the human-facing entry point.
+
 This folder defines the **pilot identity surface** before it becomes a production render mesh.
 
 The immediate purpose is not to make a pretty head. It is to produce a geometrically explicit head whose curvature and topology can be inspected while muscles, fat compartments, retaining structures, and later a volume solver are developed.
