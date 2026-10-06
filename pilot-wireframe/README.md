@@ -76,3 +76,16 @@ The cage is an **identity and curvature hypothesis**, not a biomechanics result.
 Its frontal cheek/jowl proportions are constrained by the final heavy-pilot drawings. Its depth parameters remain low-confidence because the drawings do not supply calibrated cameras or orthographic profile views. Those values are deliberately exposed in the parameter ledger rather than hidden in a sculpt.
 
 The next step is to fit an actual surface topology to this cage while preserving the option to use an independent volumetric discretization for biomechanics.
+
+## Surface topology v1 baseline
+
+`generate_surface_topology.py` now connects the transverse control-cage rings into a deliberately simple **envelope-only quad surface**. This is the first topology hypothesis, not a production face mesh.
+
+Generated artifacts:
+
+- `pilot-surface-envelope-v1-quads.obj` — 264 vertices / 240 quads;
+- `pilot-surface-envelope-v1-tri-A.obj` and `...tri-B.obj` — the same vertices with opposite quad diagonals;
+- `surface-topology-v1-metrics.tsv` — manifoldness, symmetry, diagonal sensitivity, triangle quality and refinement results;
+- `surface-topology-v1-report.md` — interpretation and rejection/acceptance boundary.
+
+The baseline passes its numerical tests, including alternate triangulation and mesh-density refinement. It is **not accepted facial topology** because it does not yet contain explicit eyelid/lip apertures or local facial patch structure. Its job is to give the next candidates something measurable to beat.
