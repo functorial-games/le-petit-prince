@@ -11,11 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Lua 5.4
+      - name: Build pinned symbolic Lua
         run: |
-          sudo apt-get update
-          sudo apt-get install -y lua5.4
+          git clone https://github.com/isomorphisms/lua.git "$RUNNER_TEMP/lua"
+          git -C "$RUNNER_TEMP/lua" checkout --detach dca7e57c16c524c8616144ed294fe598947a029f
+          test "$(git -C "$RUNNER_TEMP/lua" rev-parse HEAD)" = dca7e57c16c524c8616144ed294fe598947a029f
+          make -C "$RUNNER_TEMP/lua" -j2
       - name: Run Lua comet state-machine test
-        run: lua5.4 game/test_little_prince.lua
+        run: "$RUNNER_TEMP/lua/lua" game/test_little_prince.lua
       - name: Run C spherical walker test
         run: sh ./run-tests.sh
