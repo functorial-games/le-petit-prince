@@ -1,0 +1,8 @@
+patch	region	topology_role	adjacent_anatomy	fat_or_space_context	retaining_structure_context	status
+eye_L	left periorbital	annular quad patch around a true aperture	orbicularis oculi; levator palpebrae; globe	SOOF; superficial infraorbital fat	orbicularis retaining ligament / periorbital attachments	candidate
+eye_R	right periorbital	annular quad patch around a true aperture	orbicularis oculi; levator palpebrae; globe	SOOF; superficial infraorbital fat	orbicularis retaining ligament / periorbital attachments	candidate
+mouth	perioral	annular quad patch around a true aperture	orbicularis oris; lips; oral cavity	perioral submuscular fat	perioral septal attachments	candidate
+modiolus_L	left mouth corner	filled hybrid pole: central triangles plus quad ring	zygomaticus major; risorius; levator/depressor anguli; orbicularis oris	nasolabial / cheek fat adjacency	local fibrous junction, not modeled as a hole	candidate
+modiolus_R	right mouth corner	filled hybrid pole: central triangles plus quad ring	zygomaticus major; risorius; levator/depressor anguli; orbicularis oris	nasolabial / cheek fat adjacency	local fibrous junction, not modeled as a hole	candidate
+nasolabial_L	left nasolabial	three-rail quad strip	upper-lip elevators; zygomaticus; cheek surface	nasolabial fat and medial cheek compartments	septal/retaining effects still separate mechanics	candidate
+nasolabial_R	right nasolabial	three-rail quad strip	upper-lip elevators; zygomaticus; cheek surface	nasolabial fat and medial cheek compartments	septal/retaining effects still separate mechanics	candidate

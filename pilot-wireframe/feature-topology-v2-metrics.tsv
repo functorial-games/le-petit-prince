@@ -1,0 +1,26 @@
+patch	vertices	quads	fixed_triangles	boundary_edges	boundary_loops	nonmanifold_edges	min_angle_deg	worst_quad_diagonal_area_delta
+eye_L	72	48	0	48	2	0	15.679513891	0.00180909681
+eye_R	72	48	0	48	2	0	15.679513891	0.00180909681
+mouth	60	40	0	40	2	0	13.482254786	0.00149607728
+modiolus_L	17	8	8	8	1	0	17.397699594	0.000208712997
+modiolus_R	17	8	8	8	1	0	17.397699594	0.000208712997
+nasolabial_L	42	26	0	30	1	0	22.773938895	0.000292991764
+nasolabial_R	42	26	0	30	1	0	22.773938895	0.000292991764
+TOTAL	322	204	16	-	-	-	13.482254786	0.00180909681
+
+check	value
+mirror_eye_error	0.00000000
+mirror_modiolus_error	0.00000000
+mirror_nasolabial_error	0.00000000
+eye_R_refine_1_area	0.122078363
+eye_R_refine_1_relative_change	NA
+eye_R_refine_2_area	0.123127911
+eye_R_refine_2_relative_change	0.00852404537
+eye_R_refine_4_area	0.123393364
+eye_R_refine_4_relative_change	0.00215127334
+mouth_refine_1_area	0.134155080
+mouth_refine_1_relative_change	NA
+mouth_refine_2_area	0.135763525
+mouth_refine_2_relative_change	0.0118473989
+mouth_refine_4_area	0.136176872
+mouth_refine_4_relative_change	0.00303537080

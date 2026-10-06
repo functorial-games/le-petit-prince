@@ -80,3 +80,15 @@ Measured baseline:
 The final point is intentionally a warning: the crown/chin taper creates skinny triangles after GPU triangulation. This baseline is numerically useful but should **not** be reused as the eventual contact/FEM mesh.
 
 The next topology candidate must introduce eye and mouth apertures plus local modiolus/nasolabial resolution, then rerun the same diagonal/refinement tests.
+
+## v2 feature topology result
+
+The second candidate answers the earlier “quads or triangles?” question more concretely.
+
+Apertures naturally receive ring-like quad coordinates: circumferential around the eye/mouth and radial away from the aperture. The modiolus is not an aperture; it is a junction. Its candidate patch is therefore filled with a small triangle fan at the central pole and surrounded by quads.
+
+The seven local patches contain 322 vertices, 204 quads and 16 deliberate triangles. Every patch is manifold with its expected boundary-loop count. The minimum triangulated angle is 13.48 degrees and the worst quad-diagonal area sensitivity is 0.181%.
+
+This does **not** establish that these exact rings are biological. It establishes that a mixed topology can encode the different topological roles without the severe skinny-triangle problem seen in the v1 crown/chin taper.
+
+See `stitching-plan.md` for the next connected-surface requirements.

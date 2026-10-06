@@ -89,3 +89,31 @@ Generated artifacts:
 - `surface-topology-v1-report.md` — interpretation and rejection/acceptance boundary.
 
 The baseline passes its numerical tests, including alternate triangulation and mesh-density refinement. It is **not accepted facial topology** because it does not yet contain explicit eyelid/lip apertures or local facial patch structure. Its job is to give the next candidates something measurable to beat.
+
+## Feature topology v2
+
+The second topology experiment isolates the regions where topology has a functional reason to exist:
+
+- annular quad patches around both eyelid apertures;
+- an annular quad patch around the lip aperture;
+- quad strips along the two nasolabial paths;
+- **filled hybrid modiolus patches** with a central triangle fan and an outer quad ring.
+
+This is intentionally not stitched to the v1 envelope yet. The local patches overlap conceptually so that their numerical behavior can be tested before a global welding decision determines the anatomy by accident.
+
+Generated files:
+
+- `pilot-feature-topology-v2-quads.obj`;
+- `pilot-feature-topology-v2-tri-A.obj`;
+- `pilot-feature-topology-v2-tri-B.obj`;
+- `pilot-feature-topology-v2.svg`;
+- `feature-topology-v2-metrics.tsv`;
+- `feature-topology-v2-zones.tsv`;
+- `feature-topology-v2-report.md`;
+- `stitching-plan.md`.
+
+Run all current geometry checks with:
+
+```sh
+python3 pilot-wireframe/check_geometry.py
+```
