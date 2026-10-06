@@ -1,0 +1,27 @@
+id	region	role	front_view	three_quarter_view	profile_view	depth_status	notes
+glabella	brow	midline registration	extract	extract	extract	partly_constrained	Anchor brow/nasal-root relation
+nasion	nose	bony landmark	extract	extract	extract	profile_constrains	Do not infer from shading alone
+exocanthion_L	orbit	outer eye corner	extract	extract	extract	three_quarter_constrains	Paired
+exocanthion_R	orbit	outer eye corner	extract	extract	extract	three_quarter_constrains	Paired
+endocanthion_L	orbit	inner eye corner	extract	extract	extract	three_quarter_constrains	Paired
+endocanthion_R	orbit	inner eye corner	extract	extract	extract	three_quarter_constrains	Paired
+upper_lid_mid_L	orbit	upper aperture	extract	extract	extract	underdetermined	Expression-dependent; use neutral/tired reference
+upper_lid_mid_R	orbit	upper aperture	extract	extract	extract	underdetermined	Expression-dependent; use neutral/tired reference
+lower_lid_mid_L	orbit	lower aperture	extract	extract	extract	underdetermined	Expression-dependent
+lower_lid_mid_R	orbit	lower aperture	extract	extract	extract	underdetermined	Expression-dependent
+zygion_L	cheek	maximum cheek width	extract	extract	extract	three_quarter_constrains	Important for heavy pilot cheek curvature
+zygion_R	cheek	maximum cheek width	extract	extract	extract	three_quarter_constrains	Important for heavy pilot cheek curvature
+alar_L	nose	alar width	extract	extract	extract	three_quarter_constrains	Paired
+alar_R	nose	alar width	extract	extract	extract	three_quarter_constrains	Paired
+pronasale	nose	nose tip	extract	extract	extract	profile_constrains	Primary depth anchor
+subnasale	nose	base of nose	extract	extract	extract	profile_constrains	Upper-lip relation
+cheilion_L	mouth	mouth corner	extract	extract	extract	three_quarter_constrains	Modiolus neighborhood
+cheilion_R	mouth	mouth corner	extract	extract	extract	three_quarter_constrains	Modiolus neighborhood
+labiale_superius	mouth	upper vermilion midline	extract	extract	extract	profile_constrains	Mustache may obscure; do not infer blindly
+labiale_inferius	mouth	lower vermilion midline	extract	extract	extract	profile_constrains	Expression-dependent
+pogonion	chin	anterior chin	extract	extract	extract	profile_constrains	Lower-face depth
+menton	chin	inferior chin	extract	extract	extract	profile_constrains	Lower-face height
+gonion_L	jaw	jaw angle	extract	extract	extract	three_quarter_profile_constrain	Paired
+gonion_R	jaw	jaw angle	extract	extract	extract	three_quarter_profile_constrain	Paired
+tragion_L	ear	craniofacial registration	extract	extract	extract	three_quarter_profile_constrain	Useful head-depth anchor
+tragion_R	ear	craniofacial registration	extract	extract	extract	three_quarter_profile_constrain	Useful head-depth anchor
