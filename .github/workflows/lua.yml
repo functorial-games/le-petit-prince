@@ -18,6 +18,7 @@ jobs:
           test "$(git -C "$RUNNER_TEMP/lua" rev-parse HEAD)" = dca7e57c16c524c8616144ed294fe598947a029f
           make -C "$RUNNER_TEMP/lua" -j2
       - name: Run Lua comet state-machine test
-        run: "$RUNNER_TEMP/lua/lua" game/test_little_prince.lua
+        run: |
+          "$RUNNER_TEMP/lua/lua" game/test_little_prince.lua
       - name: Run C spherical walker test
         run: sh ./run-tests.sh
