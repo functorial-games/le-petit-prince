@@ -45,3 +45,34 @@ The result is allowed to remain underdetermined where the drawings are underdete
 ## Deformation-oriented topology
 
 See `topology.md`. The topology is a numerical/design hypothesis to test, not anatomical truth.
+
+## Control cage v0
+
+The first geometric artifact is deliberately **not** a surface mesh.
+
+`pilot-control-cage-v0.obj` is an OBJ line cage with 554 vertices and 49 named guide polylines. It records the head envelope and feature guides without prematurely deciding whether the later surface or mechanics discretization should use quads, triangles, tetrahedra, hexahedra, or another element family.
+
+Files:
+
+- `pilot-control-cage-v0.obj` — importable 3-D line cage;
+- `pilot-control-cage-v0.svg` — deterministic front / three-quarter / profile preview;
+- `pilot-control-cage-v0.points.tsv` — explicit generated vertex coordinates;
+- `pilot-control-cage-v0.parameters.tsv` — which dimensions come from the drawings and which remain weak depth hypotheses;
+- `reference-observations.md` — which prior drawings are valid identity references and which are only historical/anatomical references;
+- `landmark-observations.tsv` — first approximate image-space landmark pass on a near-frontal heavy-pilot drawing;
+- `generate_control_cage.py` — dependency-free deterministic generator.
+
+Regenerate with:
+
+```sh
+python3 pilot-wireframe/generate_control_cage.py
+python3 pilot-wireframe/generate_control_cage.py --check
+```
+
+### Important boundary
+
+The cage is an **identity and curvature hypothesis**, not a biomechanics result.
+
+Its frontal cheek/jowl proportions are constrained by the final heavy-pilot drawings. Its depth parameters remain low-confidence because the drawings do not supply calibrated cameras or orthographic profile views. Those values are deliberately exposed in the parameter ledger rather than hidden in a sculpt.
+
+The next step is to fit an actual surface topology to this cage while preserving the option to use an independent volumetric discretization for biomechanics.

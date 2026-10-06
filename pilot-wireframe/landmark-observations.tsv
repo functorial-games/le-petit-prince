@@ -1,0 +1,20 @@
+reference	image_width	image_height	landmark	x_px	y_px	confidence	status	notes
+Astonished Pilot Meets the Little Prince.png	1312	1199	eye_center_viewer_left	515	330	medium	approx	Expression widened; not neutral aperture
+Astonished Pilot Meets the Little Prince.png	1312	1199	eye_center_viewer_right	665	322	medium	approx	Perspective/head yaw present
+Astonished Pilot Meets the Little Prince.png	1312	1199	brow_inner_viewer_left	565	300	low	approx	Expression raised
+Astonished Pilot Meets the Little Prince.png	1312	1199	brow_inner_viewer_right	615	295	low	approx	Expression raised
+Astonished Pilot Meets the Little Prince.png	1312	1199	brow_outer_viewer_left	475	292	low	approx	Helmet/hair and expression complicate edge
+Astonished Pilot Meets the Little Prince.png	1312	1199	brow_outer_viewer_right	690	282	low	approx	Perspective/head yaw present
+Astonished Pilot Meets the Little Prince.png	1312	1199	pronasale	598	386	medium	approx	Strongest visible depth landmark
+Astonished Pilot Meets the Little Prince.png	1312	1199	alar_viewer_left	555	393	low	approx	Stylized nostril/nasal shading
+Astonished Pilot Meets the Little Prince.png	1312	1199	alar_viewer_right	640	390	low	approx	Stylized nostril/nasal shading
+Astonished Pilot Meets the Little Prince.png	1312	1199	subnasale	598	408	low	approx	Partly obscured by mustache shadow
+Astonished Pilot Meets the Little Prince.png	1312	1199	cheilion_viewer_left	535	452	low	approx	Mustache obscures exact lip corner
+Astonished Pilot Meets the Little Prince.png	1312	1199	cheilion_viewer_right	675	450	low	approx	Mustache obscures exact lip corner
+Astonished Pilot Meets the Little Prince.png	1312	1199	labiale_inferius	605	467	low	approx	Expression slightly parted
+Astonished Pilot Meets the Little Prince.png	1312	1199	pogonion	602	535	medium	approx	Chin front
+Astonished Pilot Meets the Little Prince.png	1312	1199	menton	603	558	medium	approx	Lower contour visible
+Astonished Pilot Meets the Little Prince.png	1312	1199	cheek_extent_viewer_left	418	425	low	approx	Soft-tissue silhouette, not bony zygion
+Astonished Pilot Meets the Little Prince.png	1312	1199	cheek_extent_viewer_right	785	410	low	approx	Soft-tissue silhouette, affected by yaw
+Astonished Pilot Meets the Little Prince.png	1312	1199	jaw_extent_viewer_left	455	520	low	approx	Soft-tissue jaw/jowl contour
+Astonished Pilot Meets the Little Prince.png	1312	1199	jaw_extent_viewer_right	760	508	low	approx	Soft-tissue jaw/jowl contour

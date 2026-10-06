@@ -1,0 +1,13 @@
+parameter	value	source_class	confidence	notes
+coordinate_scale	unitless	head identity cage	free	absolute head size is not constrained by the drawings
+cheek_half_width	0.98	final heavy-pilot drawings	moderate	broadest facial region; deliberately wider than brow
+brow_half_width	0.77	final heavy-pilot drawings	moderate	relative frontal width only
+jowl_half_width	0.86	final heavy-pilot drawings	moderate	heavy lower face remains broad below mouth
+chin_half_width	0.50	final heavy-pilot drawings	moderate	chin narrows relative to jowl
+cheek_half_depth	0.86	three-quarter appearance	low	depth is underdetermined; keep parameter free
+nose_tip_extra_depth	0.32	three-quarter appearance	low	strong nose projection, not photogrammetric measurement
+orbit_center_x	0.32	final heavy-pilot drawings	moderate	bilateral neutral identity prior
+orbit_radius_x	0.235	final heavy-pilot drawings	moderate	orbital guide, not eyeball radius
+orbit_radius_y	0.155	final heavy-pilot drawings	moderate	heavy lid identity will be a later surface/tissue property
+mouth_radius_x	0.34	final heavy-pilot drawings	moderate	outer perioral guide; mustache not part of cage
+mouth_radius_y	0.105	final heavy-pilot drawings	low	expression in references makes exact neutral aperture uncertain
