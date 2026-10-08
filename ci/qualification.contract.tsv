@@ -1,0 +1,2 @@
+actions_pinned	PLANET-ACTION-PINS	.github/workflows/icky-core.yml
+yaml_primary_checkout_ref	PLANET-EXACT-HEAD	.github/workflows/icky-core.yml	${{ github.event.pull_request.head.sha || github.sha }}

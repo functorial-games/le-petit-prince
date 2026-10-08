@@ -44,7 +44,8 @@ That representation has no special north pole and no longitude seam. Latitude
 and longitude exist only for sampling the lunar maps.
 
 The initial implementation is in `core/tiny_planet.c` and has a small
-executable test.
+executable test. The model now composes Icky C tangent-frame values. Run
+`make test ICK=/absolute/path/to/ick`; see [the build and evidence boundary](ICKY-C.md).
 
 ## Terrain
 
