@@ -1,4 +1,5 @@
 #include "face_core.h"
+#include "face_photo_guess.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +38,18 @@ static void invariants(void) {
     c[0]=-0.1;require(!face_from_controls(c,&result),"negative rejected");
     c[0]=1.1;require(!face_from_controls(c,&result),"over-one rejected");
     q[0]=NAN;require(!face_deform(q,&result),"invalid direct actuator rejected");
+    require(pilot_photo_guess_midpoint[0]>.4&&pilot_photo_guess_midpoint[1]>.3,
+            "photo guess lifts both medial brows");
+    require(pilot_photo_guess_midpoint[6]>.25&&pilot_photo_guess_midpoint[7]>.3,
+            "photo guess also recruits corrugators");
+    require(pilot_photo_guess_midpoint[2]<.2&&pilot_photo_guess_midpoint[3]<.2,
+            "photo guess preserves medial/lateral contrast");
+    require(face_deform(pilot_photo_guess_midpoint,&result),
+            "photo guess actuators produce safe connected skin");
+    require(result.pose.opening==0,"photo guess jaw remains closed");
+    for(int j=0;j<FACE_ACTUATORS;j++)
+        require(result.activations[j]>=0&&result.activations[j]<=1,
+                "photo midpoint within activation domain");
     unsigned char used[FACE_VERTICES]={0},reached[FACE_VERTICES]={0};reached[0]=1;
     for(int i=0;i<FACE_TRIANGLES;i++)for(int j=0;j<3;j++) {require(face_triangles[i][j]<FACE_VERTICES,"valid mesh index");used[face_triangles[i][j]]=1;}
     for(int pass=0;pass<FACE_VERTICES;pass++) {

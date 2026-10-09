@@ -46,7 +46,8 @@ The artifact's ZIP digest is distinct from `apk.sha256`, the actual installable 
 - PAIR ON links the counterpart for the 28 paired controls. PAIR OFF changes
   only the selected side. Singleton controls remain single.
 - NEUTRAL restores all controls and camera to neutral.
-- PRESET cycles neutral, smile, frown, unilateral smile, jaw open, jaw left, brows.
+- PRESET cycles neutral, smile, frown, unilateral smile, jaw open, jaw left, brows, and BROW KNIT (photo-based midpoint of 29 anatomical intervals).
+- BROW KNIT drives 102 independent actuators via `face_deform`, not a 36-control approximation. Plus/minus or other manual edits leave this preset. The uncertain source is [`intervals.idr`](../pilot-expressions/intervals.idr).
 - BLINK toggles bilateral eye closure. JAW OPEN/LEFT/RIGHT and BROW give direct
   diagnostic access and select their corresponding control.
 

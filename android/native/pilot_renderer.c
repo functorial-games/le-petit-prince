@@ -1,5 +1,6 @@
 #include "pilot_renderer.h"
 #include "face_ui.h"
+#include "face_photo_guess.h"
 #include <GLES2/gl2.h>
 #include <math.h>
 #include <stdio.h>
@@ -16,7 +17,7 @@ static GLint position_attribute,color_attribute;
 static FaceUI ui;
 static FaceResult result;
 static bool initialized;
-static const char *const preset_names[]={"NEUTRAL","SMILE","FROWN","LEFT SMILE","JAW OPEN","JAW LEFT","BROWS"};
+static const char *const preset_names[]={"NEUTRAL","SMILE","FROWN","LEFT SMILE","JAW OPEN","JAW LEFT","BROWS","BROW KNIT"};
 static void vertex(float x,float y,float z,float r,float g,float b) {
     if(used<CAPACITY)batch[used++]=(Vertex){x,y,z,r,g,b};
 }
@@ -44,7 +45,7 @@ bool pilot_renderer_start(int w,int h,int gles_major) {
     position_attribute=glGetAttribLocation(program,"position");color_attribute=glGetAttribLocation(program,"color");
     glGenBuffers(1,&buffer);pilot_renderer_resize(w,h);
     if(!initialized){face_ui_reset(&ui);initialized=true;}
-    return face_from_controls(ui.controls,&result);
+    return (ui.preset==7 ? face_deform(pilot_photo_guess_midpoint,&result) : face_from_controls(ui.controls,&result));
 }
 void pilot_renderer_stop(void){if(buffer)glDeleteBuffers(1,&buffer);if(program)glDeleteProgram(program);buffer=program=0;}
 void pilot_renderer_resize(int w,int h){width=w;height=h;}
@@ -55,7 +56,7 @@ void pilot_renderer_restore(const void *data,unsigned long size) {
     if(size!=sizeof(FaceUI)||!data)return;
     FaceUI saved;memcpy(&saved,data,size);
     double q[FACE_ACTUATORS];
-    if(!face_controls_to_muscles(saved.controls,q)||!isfinite(saved.yaw)||!isfinite(saved.pitch)||saved.pitch<-1.2||saved.pitch>1.2||saved.selected<0||saved.selected>=36||saved.preset<0||saved.preset>6||saved.bilateral<0||saved.bilateral>1||saved.view_mode<0||saved.view_mode>1)return;
+    if(!face_controls_to_muscles(saved.controls,q)||!isfinite(saved.yaw)||!isfinite(saved.pitch)||saved.pitch<-1.2||saved.pitch>1.2||saved.selected<0||saved.selected>=36||saved.preset<0||saved.preset>7||saved.bilateral<0||saved.bilateral>1||saved.view_mode<0||saved.view_mode>1)return;
     ui=saved;initialized=true;
 }
 static FacePoint project(FacePoint p){return face_project(p,ui.yaw,ui.pitch);}
@@ -148,7 +149,7 @@ void pilot_renderer_draw(void) {
     glViewport(0,0,width,height);glClearColor(.07f,.09f,.11f,1);glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);glDisable(GL_CULL_FACE);glEnable(GL_SCISSOR_TEST);
     glScissor(0,(int)(height*.37),width,(int)(height*.56));used=0;
-    bool ok=face_from_controls(ui.controls,&result);
+    bool ok=(ui.preset==7 ? face_deform(pilot_photo_guess_midpoint,&result) : face_from_controls(ui.controls,&result));
     double magnitudes[FACE_VERTICES],map_maximum=0;
     if(ok&&ui.view_mode)map_maximum=selected_control_map(magnitudes);
     if(ok) {
@@ -177,7 +178,8 @@ void pilot_renderer_draw(void) {
     button(3,0,ui.view_mode?"SKIN":"RAINBOW");
     text(.03,.635,"DRAG FACE TO ORBIT",width/260.0);
     char line[96];
-    if(ui.view_mode)snprintf(line,sizeof(line),"%02d %s %.2f MAP %.2f",ui.selected+1,face_control_names[ui.selected],ui.controls[ui.selected],map_maximum);
+    if(ui.preset==7)snprintf(line,sizeof(line),"PHOTO GUESS 29 MUSCLE MIDPOINTS");
+    else if(ui.view_mode)snprintf(line,sizeof(line),"%02d %s %.2f MAP %.2f",ui.selected+1,face_control_names[ui.selected],ui.controls[ui.selected],map_maximum);
     else snprintf(line,sizeof(line),"%02d %s %.2f",ui.selected+1,face_control_names[ui.selected],ui.controls[ui.selected]);
     text(.03,.67,line,width/235.0);
     button(0,.72,"PREV");button(1,.72,"NEXT");button(2,.72,"- 0.1");button(3,.72,"+ 0.1");
