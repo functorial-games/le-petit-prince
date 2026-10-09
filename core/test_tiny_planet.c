@@ -67,7 +67,7 @@ main(void)
     for (int step ← 0; step < 1000; ++step)
         tp_walker_walk(
             &walker,
-            20.0f × 2.0f × pi / 1000.0f);
+            20.0f × 2.0f × pi ÷ 1000.0f);
 
     assert(vector_near(
         walker.up,

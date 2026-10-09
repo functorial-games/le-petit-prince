@@ -1,7 +1,7 @@
 # Icky C spherical walker
 
-The two maintained C sources and the equivalence test use ← assignments and ×
-multiplication. Pointer declarations retain `*`. The public ABI header keeps
+The two maintained C sources and the equivalence test use ← assignments, ×
+multiplication, and ÷ division. Pointer declarations retain `*`. The public ABI header keeps
 its assignment-neutral declarations and layouts.
 
 Turn and walk compose immutable `tangent_frame` values through projection,
@@ -17,7 +17,7 @@ Makefile's absolute path with `make -f`. The Makefile replaces the old POSIX
 stock-compiler launcher; no generated shell helper is required. Tests require
 assertions to remain enabled.
 
-CI checks out the exact head and builds actual ICK c5d28dde9cc333a562b907785d0370b725146cdf
+CI checks out the exact head and builds actual ICK c61e448251744a2f40ad743ebef1a027bdcd2f9d
 through the pinned ai-ci producer. That native scalar profile declares host
 GCC 13 startup/libgcc and glibc/libm as prebuilt runtime dependencies; host GCC
 bootstraps ICK and does not compile maintained consumer C. It runs the original
@@ -40,3 +40,7 @@ policy, while numerical execution qualifies the frame composition.
 This qualifies the portable model on the native host. Android renderers on
 other branches, terrain downloads, packaging, and physical MIRO A1 execution
 remain separate acceptance boundaries.
+
+The 2026-10-09 division migration changes seven binary operators in the model
+and maintained tests. A forced rebuild with the current ICK frontend passed
+the complete native suite described above. Frozen reference bytes are unchanged.

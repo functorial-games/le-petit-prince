@@ -58,7 +58,7 @@ normalize(tp_vec3 v)
     if (length <= 1.0e-8f)
         return (tp_vec3){0.0f, 0.0f, 0.0f};
 
-    return scale(v, 1.0f / length);
+    return scale(v, 1.0f ÷ length);
 }
 
 static tp_vec3
@@ -181,7 +181,7 @@ tp_walker_walk(tp_walker *walker, float distance)
     if (tp_vec3_length(tangent_axis) <= 1.0e-8f)
         return;
 
-    const float radians ← distance / walker->radius;
+    const float radians ← distance ÷ walker->radius;
     publish_frame(walker, walked_frame(
         (tangent_frame){walker->up, walker->forward}, tangent_axis, radians));
 }
