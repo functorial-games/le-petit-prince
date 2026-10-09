@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 
-static const float pi = 3.14159265358979323846f;
+static const float pi ← 3.14159265358979323846f;
 
 static int
 near(float a, float b, float epsilon)
@@ -44,7 +44,7 @@ main(void)
     /* Quarter-circumference: +X -> -Z. */
     tp_walker_walk(
         &walker,
-        20.0f * pi * 0.5f);
+        20.0f × pi × 0.5f);
 
     assert(vector_near(
         walker.up,
@@ -64,10 +64,10 @@ main(void)
     /* A thousand small steps should close one full great circle. */
     assert(tp_walker_init(&walker, 20.0f));
 
-    for (int step = 0; step < 1000; ++step)
+    for (int step ← 0; step < 1000; ++step)
         tp_walker_walk(
             &walker,
-            20.0f * 2.0f * pi / 1000.0f);
+            20.0f × 2.0f × pi ÷ 1000.0f);
 
     assert(vector_near(
         walker.up,
@@ -85,7 +85,7 @@ main(void)
      */
     assert(tp_walker_init(&walker, 20.0f));
 
-    tp_walker_turn(&walker, pi * 0.5f);
+    tp_walker_turn(&walker, pi × 0.5f);
 
     assert(vector_near(
         walker.forward,
@@ -94,14 +94,14 @@ main(void)
 
     tp_walker_walk(
         &walker,
-        20.0f * pi * 0.5f);
+        20.0f × pi × 0.5f);
 
     assert(vector_near(
         walker.up,
         (tp_vec3){0.0f, 1.0f, 0.0f},
         2.0e-5f));
 
-    tp_vec3 eye =
+    tp_vec3 eye ←
         tp_walker_position(
             &walker,
             2.0f,

@@ -1,0 +1,40 @@
+name: Icky C spherical walker
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: isomorphisms/ai-ci/ick-host@ba3ff90023b09e525313793554edecf2141ff95b
+        id: ick
+      - name: Execute independent geometry tests and original equivalence
+        run: make test ICK="${{ steps.ick.outputs.compiler }}" ICK_LINK_FLAGS="${{ steps.ick.outputs.link_flags }}"
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: isomorphisms/ai-ci
+          ref: ba3ff90023b09e525313793554edecf2141ff95b
+          path: .aici
+          sparse-checkout: |
+            c-source
+            src/aici.c
+            contracts/build-toolchain-v0.contract.tsv
+          persist-credentials: false
+      - name: Enforce Icky assignments in maintained sources
+        run: make -f .aici/c-source/Makefile check ICK="${{ steps.ick.outputs.compiler }}" ICK_LINK_FLAGS="${{ steps.ick.outputs.link_flags }}" FILES="core/tiny_planet.c core/test_tiny_planet.c _/tests/frame_equivalence.c"
+      - name: Compile shared executable stage contract
+        run: '"${{ steps.ick.outputs.compiler }}" ${{ steps.ick.outputs.link_flags }} -std=c17 -O2 -Wall -Wextra -Werror .aici/src/aici.c -o "$RUNNER_TEMP/aici-icky"'
+      - name: Verify stage, pin, and exact-head contracts
+        run: '"$RUNNER_TEMP/aici-icky" suite ci/suite.tsv .'
