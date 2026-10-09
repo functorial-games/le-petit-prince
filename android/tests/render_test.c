@@ -43,8 +43,8 @@ int main(void) {
     require(pilot_renderer_start(WIDTH,HEIGHT,2),"native renderer starts");frame("neutral",1);
     require(pilot_renderer_press(.875f,.035f),"rainbow view input");frame("rainbow-selected-control",0);
     require(pilot_renderer_press(.875f,.035f),"skin view input");frame("skin-restored",1);
-    const char *names[]={"smile","frown","unilateral","jaw-open","jaw-left","brow"};
-    for(int i=0;i<6;i++){require(pilot_renderer_press(.625f,.84f),"preset input");frame(names[i],0);}
+    const char *names[]={"smile","frown","unilateral","jaw-open","jaw-left","brow","photo-brow-knit"};
+    for(int i=0;i<7;i++){require(pilot_renderer_press(.625f,.84f),"preset input");frame(names[i],0);}
     require(pilot_renderer_press(.375f,.84f),"neutral input");frame("reset",1);
     require(pilot_renderer_press(.625f,.92f),"jaw right input");frame("jaw-right",0);
     pilot_renderer_drag(.15f,.07f);frame("orbit",0);
