@@ -1,0 +1,6 @@
+path	role	qualification
+core/tiny_planet.c	owned-model	immutable tangent-frame maps; ICK native tests
+core/test_tiny_planet.c	owned-test	independent sphere and pole expectations
+core/tiny_planet.h	public-ABI	assignment-neutral declarations; layout retained
+_/tests/frame_equivalence.c	owned-test	bitwise original comparison and API edge cases
+_/tests/reference/tiny_planet.c	frozen-comparator	original 212662217cf5294be5f4add3a5d9ea95176bd9f9; never rewritten
